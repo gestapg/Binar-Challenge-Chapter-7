@@ -45,6 +45,19 @@ function getWinner(fullMatch) {
   }
 }
 
+const calcResult = (player1Pick, player2Pick) => {
+  if (player2Pick === null || player2Pick === undefined)
+    return `player 2 has not picked yet`;
+
+  if (player1Pick === player2Pick) return 'DRAW';
+  if (player1Pick === 'R')
+    return playaer2Pick === 'S' ? 'PLAYER 1 WIN' : 'PLAYER 2 WIN';
+  if (player1Pick === 'P')
+    return playaer2Pick === 'R' ? 'PLAYER 1 WIN' : 'PLAYER 2 WIN';
+  if (player1Pick === 'S')
+    return playaer2Pick === 'P' ? 'PLAYER 1 WIN' : 'PLAYER 2 WIN';
+};
+
 exports.register = async (req, res, next) => {
   // console.log(req.body);
   // res.status(200).send(req.body);
@@ -118,14 +131,15 @@ exports.playerJoin = async (req, res, next) => {
     if (matchRoom.player2Id !== null)
       throw new Error(`Another player already joined this room`);
 
-    await Room.update(
+    const roomArray = await Room.update(
       { player2Id: req.body.player2Id },
-      { where: { id: roomId } }
+      { where: { id: roomId }, returning: true }
     );
 
+    const [_, room] = [...roomArray];
     res.status(200).json({
       status: 'success',
-      room: matchRoom,
+      room: room,
     });
   } catch (err) {
     res.status(400).json({
@@ -140,35 +154,79 @@ exports.playGame = async (req, res, next) => {
   const matchRoom = await Room.findOne({ where: { id: req.params.room_id } });
   const player = await activePlayer(req.body.userId, req.params.room_id);
 
-  const matchInfo = matchRoom.matchInfo;
+  let matchInfo = matchRoom.matchInfo;
 
-  if (matchInfo.every(el => el != ''))
+  let player1Choices = matchRoom.player1Choices;
+  let player2Choices = matchRoom.player2Choices;
+
+  if (matchInfo.length > 3)
     res.status(200).json({
       status: 'success',
       message: 'Game Ended!',
     });
   else {
     if (player === 'Player 1') {
-      for (let i = 0; i < matchInfo.length; i += 2) {
-        if (matchInfo[i] == '') {
-          matchInfo[i] = req.body.pick;
-          break;
-        }
-      }
-    } else if (player === 'Player 2') {
-      for (let i = 1; i < matchInfo.length; i += 2) {
-        if (matchInfo[i] == '') {
-          matchInfo[i] = req.body.pick;
-          break;
-        }
-      }
-    }
+      if (!req.body.pick)
+        throw new Error(`Please pick your choices between "R", "P", "S"`);
 
-    const match = await Room.update(
-      { matchInfo: matchInfo },
-      { where: { id: req.params.room_id }, returning: true }
-    );
-    res.status(200).json(match);
+      player1Choices.push(req.body.pick);
+      const roomUpdate = await Room.update(
+        { player1Choices },
+        { where: { id: req.params.room_id }, returning: true }
+      );
+      const [_, room] = [...roomUpdate];
+      const enemyPick = room[0].player2Choices;
+      const yourPick = room[0].player1Choices;
+      const gameResult = room[0].matchInfo;
+
+      res.status(200).json({
+        status: 'success',
+        message: 'Wait for opponent player to pick',
+        yourPick,
+        enemyPick,
+        gameResult,
+      });
+
+      // for (let i = 0; i < matchInfo.length; i += 2) {
+      //   if (matchInfo[i] == '') {
+      //     matchInfo[i] = req.body.pick;
+      //     break;
+      //   }
+      // }
+      // } else if (player === 'Player 2') {
+      //   for (let i = 1; i < matchInfo.length; i += 2) {
+      //     if (matchInfo[i] == '') {
+      //       matchInfo[i] = req.body.pick;
+      //       break;
+      //     }
+      //   }
+      // }
+
+      // const match = await Room.update(
+      //   { matchInfo: matchInfo },
+      //   { where: { id: req.params.room_id }, returning: true }
+      // );
+      // res.status(200).json(match);
+    } else if (player === 'Player 2') {
+      if (!req.body.pick)
+        throw new Error(`Please pick your choices between "R", "P", "S"`);
+
+      player2Choices.push(req.body.pick);
+      const roomUpdate = await Room.update(
+        { player2Choices },
+        { where: { id: req.params.room_id }, returning: true }
+      );
+      const [_, room] = [...roomUpdate];
+      const enemyPick = room[0].player1Choices;
+      const yourPick = room[0].player2Choices;
+      const gameResult = room[0].matchInfo;
+      res.status(200).json({
+        status: 'success',
+        enemyPick,
+        yourPick,
+        gameResult,
+      });
+    }
   }
 };
 
@@ -187,7 +245,6 @@ exports.gameResult = async (req, res, next) => {
       winner = getWinner(matchInfo.slice(4, 6));
       break;
   }
-  console.log(winner);
 
   if (winner != '') res.json({ message: winner });
   else res.json({ message: 'error' });

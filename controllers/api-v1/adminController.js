@@ -60,7 +60,7 @@ exports.getUserLogin = (req, res, next) => {
 exports.userValidationLogin = body('username').custom(
   async (value, { req }) => {
     if (value === 'admin') {
-      const admin = Admin.duplicateCheckUserName(value);
+      const admin = await User.findOne({ where: { username: value } });
       if (admin && admin.password === req.body.password) {
         return true;
       } else return false;
@@ -77,7 +77,7 @@ exports.userValidationLogin = body('username').custom(
   }
 );
 
-exports.postUserLogin = (req, res, next) => {
+exports.postUserLogin = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     res.render('layouts/login', {
@@ -87,8 +87,9 @@ exports.postUserLogin = (req, res, next) => {
     });
   }
   const username = req.body.username;
-  if (username === 'admin') {
-    res.redirect('/admin/dashboard');
+  const admin = await User.findOne({ where: { username } });
+  if (admin.role === 'admin') {
+    res.redirect('/api/v1/admin/dashboard');
   } else {
     User.findOne({ where: { username } })
       .then(user => {

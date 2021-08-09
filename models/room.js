@@ -39,15 +39,15 @@ module.exports = (sequelize, DataTypes) => {
       },
       player1Choices: {
         type: DataTypes.ARRAY(DataTypes.ENUM(['R', 'P', 'S'])),
-        defaultValue: ['', '', ''],
+        defaultValue: [],
       },
       player2Choices: {
         type: DataTypes.ARRAY(DataTypes.ENUM(['R', 'P', 'S'])),
-        defaultValue: ['', '', ''],
+        defaultValue: [],
       },
       matchInfo: {
         type: DataTypes.ARRAY(DataTypes.STRING),
-        defaultValue: ['', '', '', '', '', ''],
+        defaultValue: [],
       },
       winnerId: {
         type: DataTypes.UUID,
