@@ -1,0 +1,341 @@
+.tombol {
+  background: linear-gradient(194.68deg, #ffb548 11.27%, #f3af34 90.4%);
+  font-size: 16px;
+  font-weight: bold;
+  width: 12rem;
+  height: 3rem;
+  color: black;
+}
+
+h1,
+h3,
+p {
+  color: white;
+}
+
+/* Navbar */
+
+.navbar {
+  opacity: 0.65;
+  font-family: "Open Sans", sans-serif;
+  letter-spacing: 4px;
+}
+
+.navbar-brand {
+  font-size: 25px;
+  color: white;
+}
+
+.navbar-nav .nav-item .nav-link {
+  opacity: 1 !important;
+  font-size: 13px;
+  color: white;
+}
+
+/* Firstpage */
+
+#firstpage {
+  background-image: radial-gradient(189.96% 61.18% at 50% 38.82%, rgba(255, 181, 72, 0) 0%, rgba(52, 44, 29, 0.80319) 73.22%, #08090a 99.74%), url("../asset1/main-bg.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: bottom;
+  height: 100vh;
+}
+
+@media only screen and (min-width: 769px) {
+  #firstpage h1 {
+    font-size: 60px;
+    color: white;
+    font-size: 300;
+    letter-spacing: 6px;
+    margin-bottom: 40px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  #firstpage h1 {
+    font-size: 30px;
+    color: white;
+    font-size: 300;
+    letter-spacing: 6px;
+    margin-bottom: 40px;
+  }
+}
+
+#firstpage h3 {
+  font-size: 20px;
+  color: white;
+  letter-spacing: 3px;
+  margin-bottom: 40px;
+  font-weight: 400;
+}
+
+#firstpage .tombol {
+  font-size: 16px;
+  font-weight: bold;
+  width: 12rem;
+  height: 3rem;
+  color: black;
+}
+
+#firstpage a {
+  color: white;
+  width: 100px;
+}
+
+/* Secondpage */
+
+#secondpage {
+  background-image: radial-gradient(136.03% 54.57% at 50% 48.04%, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0) 60.63%, #080a0b 99.74%), url("../asset1/the-games-bg.jpg");
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+  height: 100vh;
+}
+
+#secondpage h1 {
+  font-size: 50px;
+  letter-spacing: 3px;
+  color: white;
+}
+
+#secondpage h3 {
+  font-size: 24px;
+  letter-spacing: 2px;
+  color: white;
+}
+#secondpage .carousel-indicators button {
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  margin: 17px;
+}
+
+/* #secondpage img {
+  width: 700px;
+  padding-left: 60px; 
+} */
+
+/* Thirdpage */
+
+#thirdpage {
+  background: radial-gradient(51.1% 80.48% at 30.85% 53.65%, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0) 19.2%, rgba(4, 5, 6, 0.520671) 47.48%, #080a0b 99.74%), url(../asset1/features.jpg);
+  background-size: cover;
+  background-position: center;
+  /* background-attachment: fixed; */
+  height: 100vh;
+}
+
+#thirdpage h1 {
+  color: white;
+  font-size: 50px;
+  letter-spacing: 3px;
+}
+
+#thirdpage h3 {
+  font-size: 24px;
+  letter-spacing: 2px;
+  color: white;
+}
+
+#thirdpage p {
+  color: white;
+}
+
+#thirdpage h5 {
+  color: #f3af34;
+}
+
+#thirdpage .line {
+  border: 1px solid white;
+  height: 100px;
+  width: 0px;
+}
+
+/* Fourthpage */
+
+#fourthpage {
+  background: radial-gradient(33.26% 45% at 64.32% 47.1%, rgba(255, 255, 255, 0) 3.36%, rgba(0, 0, 0, 0) 19.22%, #080a0b 99.74%), url(../asset1/requirements.png);
+  background-size: cover;
+  background-position: top;
+  background-attachment: fixed;
+  height: 100vh;
+}
+
+@media only screen and (min-width: 769px) {
+  #fourthpage h1 {
+    font-size: 56px;
+    letter-spacing: 3px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  #fourthpage h1 {
+    font-size: 30px;
+    letter-spacing: 3px;
+  }
+}
+
+#fourthpage h5 {
+  color: #f3af34;
+}
+
+#fourthpage .row .borderimg {
+  border: 9px solid;
+  border-image: url(../asset1/Vector2.png) 10 round;
+}
+
+#fourthpage .row .garis {
+  border-bottom: 2px solid;
+  padding: 7px;
+}
+
+#fourthpage .row .tengah {
+  border-left: 2px solid;
+}
+
+/* fifthpage */
+
+#fifthpage {
+  background: radial-gradient(70.52% 37.27% at 24.21% 47.47%, rgba(35, 15, 15, 0) 0%, rgba(0, 0, 0, 0) 51.1%, #080a0b 99.74%), url(../asset1/fifthpage.jpg);
+  background-size: cover;
+  background-position: top;
+  background-attachment: fixed;
+  height: 100vh;
+}
+
+@media only screen and (min-width: 768px) {
+  #fifthpage .card {
+    border-radius: 10px;
+    width: 27rem;
+    height: 12rem;
+  }
+  #fifthpage h1 {
+    font-size: 56px;
+    letter-spacing: 3px;
+  }
+}
+
+@media only screen and (min-width: 576px) {
+  #fifthpage h1 {
+    font-size: 40px;
+    letter-spacing: 3px;
+  }
+}
+
+#fifthpage .gambar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+#fifthpage h6 {
+  color: #f3af34;
+  letter-spacing: 2px;
+  font-size: 1.4em;
+}
+
+#fifthpage .d-flex .profesi {
+  font-size: 18;
+  opacity: 0.5;
+}
+
+#fifthpage .card-body .card-text {
+  font-size: 18px;
+  margin-top: -10px;
+}
+
+#fifthpage .card-body .date {
+  margin-top: -10px;
+  font-size: 14px;
+  opacity: 0.5;
+}
+
+/* sixthpage */
+
+#sixthpage {
+  background-color: #080a0b;
+  height: 100vh;
+}
+
+@media only screen and (min-width: 769px) {
+  #sixthpage h1 {
+    font-size: 80px;
+    letter-spacing: 3px;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  #sixthpage h1 {
+    font-size: 40px;
+    letter-spacing: 3px;
+  }
+  #sixthpage img {
+    display: none;
+  }
+}
+
+#sixthpage h3 {
+  font-size: 24px;
+  letter-spacing: 2px;
+  color: white;
+  font-weight: 400;
+}
+
+#sixthpage .form-floating label {
+  color: rgb(160, 159, 158);
+}
+
+#sixthpage .form-floating input {
+  color: #f3af34;
+}
+
+/* Footer */
+
+#footer {
+  background-color: #080a0b;
+}
+
+#footer a {
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+#footer ul {
+  display: flex;
+  list-style: none;
+  justify-content: space-between;
+}
+
+#footer ul li {
+  margin: 0 7px;
+}
+
+#footer hr {
+  color: white;
+}
+
+#footer .copyright :first-child {
+  font-size: 14px;
+  color: white;
+  opacity: 0.5;
+}
+
+#footer .copyright :nth-child(2) {
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: white;
+  margin-bottom: 50px;
+}
+
+@media only screen and (max-width: 992px) {
+  #footer .word {
+    display: none;
+  }
+}

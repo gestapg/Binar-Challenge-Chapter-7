@@ -1,0 +1,87 @@
+.background {
+  background-color: #9c835f;
+  height: 100vh;
+}
+
+#back__button {
+  text-decoration: none;
+  font-size: 50px;
+  font-style: none;
+  color: #724c21;
+  font-weight: 700;
+  border: none;
+  background-color: #9c835f;
+}
+
+.judul {
+  color: #f9b23d;
+  font-weight: 700;
+}
+
+img {
+  width: 50px;
+  height: 50px;
+}
+.batu {
+  cursor: pointer;
+  width: 115px;
+  height: 115px;
+}
+.kertas {
+  cursor: pointer;
+  width: 115px;
+  height: 115px;
+}
+.gunting {
+  cursor: pointer;
+  width: 115px;
+  height: 115px;
+}
+
+.konten {
+  height: 100vh;
+}
+
+.vs {
+  font-size: 100px;
+  color: #bd0000;
+}
+
+.hidden {
+  border-radius: 30px;
+  background-color: #c4c4c4;
+  height: 150px;
+  width: 150px;
+}
+.hasil {
+  width: 20rem;
+  height: fit-content;
+  font-size: 40px;
+  font-weight: 700;
+  color: white;
+  transform: rotate(-25deg);
+  background-color: #4c9654;
+  border-radius: 10px;
+}
+.draw {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20rem;
+  height: 150px;
+  font-size: 38px;
+  font-weight: 700;
+  color: white;
+  transform: rotate(-25deg);
+  background-color: #035b0c;
+  border-radius: 10px;
+}
+
+.refresh {
+  background-color: #9c835f;
+  border: none;
+}
+
+.hide {
+  display: none;
+}
