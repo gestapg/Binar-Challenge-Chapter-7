@@ -11,9 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
+    static associate({ User_biodata, User_game_histories }) {
       // define association here
+      this.hasOne(User_biodata, { foreignKey: 'userId' });
+      this.hasMany(User_game_histories, { foreignKey: 'userId' });
     }
+
     static #encrypt = password => bcrypt.hashSync(password, 10);
 
     static register = ({ username, email, password, role }) => {

@@ -1,5 +1,5 @@
-const { User } = require('./../models');
-const { Room } = require('./../models');
+const { User } = require('../../models');
+const { Room } = require('../../models');
 
 const format = user => {
   const { id, username } = user;

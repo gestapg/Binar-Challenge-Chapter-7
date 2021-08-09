@@ -1,0 +1,61 @@
+<%- include("../includes/header") %>
+  </head>
+  <body>
+    <div class="background container-fluid">
+      <div class="container-fluid d-flex align-items-center fixed-top">
+        <a href="/" type="button" class="back--button" id="back__button"><</a>
+        <img src="/asset2/logo 1.png" alt="" class="ms-3" />
+        <h2 class="ms-3 judul me-5">ROCK PAPER SCISSORS</h2>
+        <h2 class="chances judul mb-3" style="color: black; background-color: yellow; border-radius: 5px;">Game Chances : <span class="score__display">5</span></h2>
+      </div>
+      <div class="konten container-fluid d-flex align-items-center">
+        <div class="container">
+          <div class="row pt-3">
+            <div id="player-area" class="col-4 text-center">
+              <h1>PLAYER 1</h1>
+              <div class="btn--batu p-3 mx-auto"><img src="/asset2/batu.png" alt="" class="batu" /></div>
+              <div class="btn--kertas p-3 mx-auto"><img src="/asset2/kertas.png" alt="" class="kertas" /></div>
+              <div class="btn--gunting p-3 mx-auto"><img src="/asset2/gunting.png" alt="" class="gunting" /></div>
+            </div>
+            <div class="col-4 d-flex justify-content-center align-items-center">
+              <div id="result-area" class="text-center">
+                <h1 class="vs">VS</h1>
+              </div>
+            </div>
+            <div id="comp-area" class="col-4 text-center">
+              <h1>COM</h1>
+              <div class="comp--batu p-3 mx-auto"><img src="/asset2/batu.png" alt="" class="batu" /></div>
+              <div class="comp--kertas p-3 mx-auto"><img src="/asset2/kertas.png" alt="" class="kertas" /></div>
+              <div class="comp--gunting p-3 mx-auto"><img src="/asset2/gunting.png" alt="" class="gunting" /></div>
+            </div>
+          </div>
+          <div class="row">
+            <button class="new-game refresh" type="button">
+              <img src="/asset2/refresh.png" alt="" />
+            </button>
+            <!-- <form class="excecute row hide" action="/game/:id" method="POST">
+              <input type="hidden" class="score__result" name="score">
+              <input type="hidden" class="score__result" name="id" value="<%- id %> ">
+
+              <button type="submit" class="play__again col-2 offset-4 btn btn-warning me-3" style="font-size: large; font-weight: 700;">Play Again!!</button>
+            </form> -->
+            <form class="excecute row hide" action="/game/score/:id" method="POST">
+              <input type="hidden" class="score__result" name="score">
+              <input type="hidden" class="score__result" name="userId" value="<%- id %> ">
+            <button type="submit" class="view__score col-2 offset-5 btn btn-danger" style="font-size: large; font-weight: 700;">Quit and View Score</button>
+            </form>
+            <!-- <form class="col text-center" action="/game/:id" method="POST">
+              <button class="new-game refresh" type="submit">
+                <img src="/asset2/refresh.png" alt="" />
+              </button>
+              <input type="hidden" class="score__result" name="score">
+              <input type="hidden" class="score__result" name="id" value="">
+            </form> -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/game.js"></script>
+    <!-- Bootstrap Bundle with Popper -->
+    <%- include("../includes/footer.ejs") %>

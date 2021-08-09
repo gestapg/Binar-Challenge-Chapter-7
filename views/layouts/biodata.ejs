@@ -1,0 +1,40 @@
+<%- include("../includes/header.ejs") %>
+  </head>
+  <body>
+      <!-- ===== Navbar ===== -->
+      <%- include("../includes/nav.ejs") %>
+      <!-- ===== End of Navbar ===== -->
+    <div class="layoutsu bg-success container-fluid d-flex">
+      <form class="form__bgsu bg-light mx-auto shadow" action="/biodata/:id" method="POST">
+        <% if (typeof errors != 'undefined') { %>
+            <div class="alert alert-danger" role="alert">
+                <ul>
+                    <% errors.forEach(error => { %> 
+                        <li><%= error.msg %></li>
+                    <% }) %>
+                </ul>
+              </div>
+        <% } %>
+        <h3 class="mx-auto mb-3 mt-3">Input Your Biodata!</h3>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" name="firstName" id="firstName" placeholder="firstName" required />
+          <label for="floatingInput">First Name</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" name="lastName" id="lastName" placeholder="lastName" required />
+          <label for="floatingInput">Last Name</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" name="nationality" id="password" placeholder="nationality" required />
+          <label for="floatingInput">Nationality</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" name="tribe" id="password" placeholder="tribe" required />
+          <label for="floatingInput">Tribe</label>
+        </div>
+        <input type="hidden" name="userId" value="<%- userId %>">
+        <button type="submit" class="btn btn-primary mb-3">Done</button>
+      </form>
+    </div>
+
+    <%- include("../includes/footer.ejs") %>

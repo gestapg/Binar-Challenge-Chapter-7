@@ -1,0 +1,41 @@
+<%- include("../includes/header.ejs") %>
+</head>
+<body>
+    <!-- ===== Navbar ===== -->
+    <%- include("../includes/nav.ejs") %>
+    <!-- ===== End of Navbar ===== -->
+    <form action="/admin/dashboard/update/<%= userId %>" method="POST" class="container col-3" style="margin-top: 100px;">
+        <h1 class="mb-4">Edit Your Data!</h1>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" name="userName" id="userName" placeholder="Username" value="<%= user.userName %>" required />
+          <label for="floatingInput">Username</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" value="<%= user.email %>" required />
+          <label for="floatingInput">Email address</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="password" class="form-control" name="password" id="password" placeholder="Password" value="<%= user.password %>" required />
+          <label for="floatingPassword">Password</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" name="firstName" id="firstName" placeholder="firstName" value="<%= biodata.firstName %>" required />
+          <label for="floatingInput">First Name</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" name="lastName" id="lastName" placeholder="lastName" value="<%= biodata.lastName %>" required />
+          <label for="floatingInput">Last Name</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" name="nationality" id="password" placeholder="nationality" value="<%= biodata.nationality %>" required />
+          <label for="floatingInput">Nationality</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" name="tribe" id="password" placeholder="tribe" value="<%= biodata.tribe %>" required />
+          <label for="floatingInput">Tribe</label>
+        </div>
+        <button type="submit" class="btn btn-primary mb-3">Update Data</button>
+    </form>
+    <%- include("../includes/footer.ejs") %>
+
+
