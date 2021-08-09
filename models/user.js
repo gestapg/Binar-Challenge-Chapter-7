@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
 
     static register = ({ username, email, password, role }) => {
       const encryptedPassword = this.#encrypt(password);
-      console.log(encryptedPassword);
+      // console.log(encryptedPassword);
 
       return this.create({
         username,
@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
 
     generateToken = () => {
       const payload = {
-        id: this.uuid,
+        id: this.id,
         username: this.username,
       };
 
@@ -62,7 +62,9 @@ module.exports = (sequelize, DataTypes) => {
   }
   User.init(
     {
-      uuid: {
+      id: {
+        allowNull: false,
+        primaryKey: true,
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
       },
