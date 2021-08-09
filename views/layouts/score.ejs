@@ -6,8 +6,8 @@
     <!-- ===== End of Navbar ===== -->
     <div class="container text-center" style="margin-top: 100px;">
         <h1 class="mb-3">GAME HISTORY</h1>
-        <a href="/game/<%= userId %>" class="btn btn-success mb-3">Play Again!</a>
-        <a href="/admin/dashboard/details/<%= userId %>" class="btn btn-primary mb-3">View Profile</a>
+        <a href="/api/v1/admin/game/<%= userId %>" class="btn btn-success mb-3">Play Again!</a>
+        <a href="/api/v1/admin/dashboard/details/<%= userId %>" class="btn btn-primary mb-3">View Profile</a>
         <div class="row">
             
             <% games.forEach((game, i) => { %>

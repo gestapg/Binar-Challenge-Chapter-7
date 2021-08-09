@@ -5,7 +5,7 @@
       <%- include("../includes/nav.ejs") %>
       <!-- ===== End of Navbar ===== -->
     <div class="layout container-fluid d-flex">
-      <form class="form__bg bg-light mx-auto shadow" action="/login" method="POST">
+      <form class="form__bg bg-light mx-auto shadow" action="/api/v1/admin/login" method="POST">
         <% if (typeof errors != 'undefined') { %>
           <div class="alert alert-danger" role="alert">
               <ul>
@@ -17,7 +17,7 @@
       <% } %>
         <h3 class="mx-auto mb-3 mt-3">Welcome!</h3>
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" name="userName" id="userName" placeholder="Username" required/>
+          <input type="text" class="form-control" name="username" id="username" placeholder="Username" required/>
           <label for="floatingInput">Username</label>
         </div>
         <div class="form-floating mb-3">
@@ -25,7 +25,7 @@
           <label for="floatingPassword">Password</label>
         </div>
         <button type="submit" class="btn btn-primary mb-3">Login</button>
-        <a href="/signup" class="btn btn-primary mb-3">Sign Up</a>
+        <a href="/api/v1/admin/signup"" class="btn btn-primary mb-3">Sign Up</a>
       </form>
     </div>
 

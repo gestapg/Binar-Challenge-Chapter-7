@@ -20,7 +20,7 @@
                       
                     </div>
                     <div class="col">
-                        <h5 class="card-title mb-3"><%= user.userName %></h5>
+                        <h5 class="card-title mb-3"><%= user.username %></h5>
                       <h5 class="card-title mb-3"><%= user.email %></h5>
                       <h5 class="card-title mb-3"><%= biodata.firstName %></h5>
                       <h5 class="card-title mb-3"><%= biodata.lastName %></h5>
@@ -29,10 +29,10 @@
 
                     </div>
                 </div>
-              <a href="/admin/dashboard/edit/<%= user.id %>" class="btn btn-primary">Edit Data</a>
-              <a href="/admin/dashboard/delete/<%= user.id %>" class="btn btn-danger">Delete User</a>
-              <a href="/game/score/<%= user.id %>" class="btn btn-warning">Game Gistory</a>
-              <a href="/admin/dashboard" class="btn btn-success d-block mt-4">Back to Dashboard</a>
+              <a href="/api/v1/admin/dashboard/edit/<%= user.id %>" class="btn btn-primary">Edit Data</a>
+              <a href="/api/v1/admin/dashboard/delete/<%= user.id %>" class="btn btn-danger">Delete User</a>
+              <a href="/api/v1/admin/game/score/<%= user.id %>" class="btn btn-warning">Game Gistory</a>
+              <a href="/api/v1/admin/dashboard" class="btn btn-success d-block mt-4">Back to Dashboard</a>
             </div>
           </div>
     </div>

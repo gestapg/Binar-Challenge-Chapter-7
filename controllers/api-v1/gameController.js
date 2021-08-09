@@ -37,7 +37,7 @@ exports.postGameScore = (req, res, next) => {
   User_game_histories.create({ userId, score })
     .then(games => {
       const userId = games.userId;
-      res.redirect(`/game/score/${userId}`);
+      res.redirect(`/api/v1/admin/game/score/${userId}`);
     })
     .catch(err => {
       console.log(err);

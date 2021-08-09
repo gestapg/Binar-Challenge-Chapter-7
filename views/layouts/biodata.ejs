@@ -5,7 +5,7 @@
       <%- include("../includes/nav.ejs") %>
       <!-- ===== End of Navbar ===== -->
     <div class="layoutsu bg-success container-fluid d-flex">
-      <form class="form__bgsu bg-light mx-auto shadow" action="/biodata/:id" method="POST">
+      <form class="form__bgsu bg-light mx-auto shadow" action="/api/v1/admin/biodata/:id" method="POST">
         <% if (typeof errors != 'undefined') { %>
             <div class="alert alert-danger" role="alert">
                 <ul>

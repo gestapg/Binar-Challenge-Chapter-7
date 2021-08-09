@@ -1,8 +1,9 @@
 // const User = require('../models/user');
 const { check, body, validationResult, Result } = require('express-validator');
 const { sequelize, User, User_biodata } = require('../../models');
+const bcrypt = require('bcrypt');
 
-const Admin = require('../utils/admin');
+// const Admin = require('../utils/admin');
 
 ////////// USER SIGN UP //////////////
 exports.getUserSignUp = (req, res, next) => {
@@ -10,8 +11,8 @@ exports.getUserSignUp = (req, res, next) => {
 };
 
 exports.userValidationSignUp = [
-  body('userName').custom(async value => {
-    const duplicate = await User.findOne({ where: { userName: value } });
+  body('username').custom(async value => {
+    const duplicate = await User.findOne({ where: { username: value } });
     if (duplicate) {
       throw new Error('Username already exsist');
     }
@@ -36,11 +37,12 @@ exports.postUserSignUp = (req, res, next) => {
       errors: errors.array(),
     });
   } else {
-    const { userName, email, password } = req.body;
-    User.create({ userName, email, password })
+    const { username, email, password } = req.body;
+    const encryptedPassword = bcrypt.hashSync(password, 10);
+    User.create({ username, email, password: encryptedPassword })
       .then(result => {
         const id = result.dataValues.id;
-        res.redirect(`/biodata/${id}`);
+        res.redirect(`/api/v1/admin/biodata/${id}`);
       })
       .catch(err => {
         console.log(err);
@@ -55,7 +57,7 @@ exports.getUserLogin = (req, res, next) => {
   res.render('layouts/login', { title, style });
 };
 
-exports.userValidationLogin = body('userName').custom(
+exports.userValidationLogin = body('username').custom(
   async (value, { req }) => {
     if (value === 'admin') {
       const admin = Admin.duplicateCheckUserName(value);
@@ -63,10 +65,11 @@ exports.userValidationLogin = body('userName').custom(
         return true;
       } else return false;
     }
-    const user = await User.findOne({ where: { userName: value } });
+    const user = await User.findOne({ where: { username: value } });
+    const result = bcrypt.compareSync(req.body.password, user.password);
     if (!user) {
       throw new Error('Invalid Username, Please sign up first!');
-    } else if (user.password !== req.body.password) {
+    } else if (!result) {
       throw new Error('Wrong password!!');
     } else {
       return true;
@@ -83,13 +86,13 @@ exports.postUserLogin = (req, res, next) => {
       errors: errors.array(),
     });
   }
-  const userName = req.body.userName;
-  if (userName === 'admin') {
+  const username = req.body.username;
+  if (username === 'admin') {
     res.redirect('/admin/dashboard');
   } else {
-    User.findOne({ where: { userName } })
+    User.findOne({ where: { username } })
       .then(user => {
-        res.redirect(`/game/${user.id}`);
+        res.redirect(`/api/v1/admin/game/${user.id}`);
       })
       .catch(err => {
         console.log(err);
@@ -115,7 +118,7 @@ exports.postUserBiodataInput = async (req, res, next) => {
     userId,
   })
     .then(result => {
-      res.redirect('/login');
+      res.redirect('/api/v1/admin/login');
     })
     .catch(err => {
       console.log(err);
@@ -163,52 +166,48 @@ exports.getEditUser = async (req, res, next) => {
   });
 };
 
-exports.putEditUser = (req, res, next) => {
-  const userId = req.params.id;
-  const { userName, email, password, firstName, lastName, nationality, tribe } =
-    req.body;
-
-  User.update(
-    {
-      userName,
+exports.putEditUser = async (req, res, next) => {
+  try {
+    const userId = req.params.id;
+    const {
+      username,
       email,
       password,
-    },
-    {
-      where: {
-        id: userId,
-      },
-    }
-  )
-    .then(result => {
-      User_biodata.update(
-        {
-          firstName,
-          lastName,
-          nationality,
-          tribe,
-        },
-        { where: { userId } }
-      ).then(result => {
-        res.redirect('/admin/dashboard');
-      });
-    })
-    .catch(err => console.log(err));
+      firstName,
+      lastName,
+      nationality,
+      tribe,
+    } = req.body;
+    const encryptedPassword = bcrypt.hashSync(password, 10);
+
+    await User.update(
+      { username, email, password: encryptedPassword },
+      { where: { id: userId } }
+    );
+    await User_biodata.update(
+      { firstName, lastName, nationality, tribe },
+      { where: { userId } }
+    );
+
+    res.redirect('/api/v1/admin/dashboard');
+  } catch (err) {
+    res.status(400).json({ error: err });
+  }
 };
 
-exports.getDeleteUser = (req, res, next) => {
-  const userId = req.params.id;
-  const user = User.findOne({ where: { id: userId } });
-  if (!user) {
-    res.status(404);
-    res.render('layouts/404');
-  } else {
-    User.destroy({ where: { id: userId } }).then(result => {
-      User_biodata.destroy({ where: { userId } })
-        .then(result => {
-          res.redirect('/admin/dashboard');
-        })
-        .catch(err => console.log(err));
-    });
+exports.getDeleteUser = async (req, res, next) => {
+  try {
+    const userId = req.params.id;
+    const user = User.findOne({ where: { id: userId } });
+    if (!user) {
+      res.status(404);
+      res.render('layouts/404');
+    } else {
+      await User.destroy({ where: { id: userId } });
+      await User_biodata.destroy({ where: { userId } });
+      res.redirect('/api/v1/admin/dashboard');
+    }
+  } catch (err) {
+    res.status(400).json({ error: err });
   }
 };
