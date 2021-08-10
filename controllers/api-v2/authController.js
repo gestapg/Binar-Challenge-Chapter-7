@@ -24,38 +24,23 @@ async function activePlayer(id, roomId) {
   }
 }
 
-function getWinner(fullMatch) {
-  matchStr = fullMatch.join('');
-
-  switch (matchStr) {
-    case 'RR':
-    case 'PP':
-    case 'SS':
-      return 'Draw';
-    case 'RS':
-    case 'SP':
-    case 'PR':
-      return 'Player 1 Win';
-    case 'SR':
-    case 'PS':
-    case 'RP':
-      return 'Player 2 Win';
-    default:
-      return 'The Game has not been finished yet';
-  }
-}
-
 const calcResult = (player1Pick, player2Pick) => {
-  if (player2Pick === null || player2Pick === undefined)
-    return `player 2 has not picked yet`;
-
+  if (!player1Pick || !player2Pick) return `Another player has not picked yet`;
   if (player1Pick === player2Pick) return 'DRAW';
   if (player1Pick === 'R')
-    return playaer2Pick === 'S' ? 'PLAYER 1 WIN' : 'PLAYER 2 WIN';
+    return player2Pick === 'S' ? 'PLAYER 1 WIN' : 'PLAYER 2 WIN';
   if (player1Pick === 'P')
-    return playaer2Pick === 'R' ? 'PLAYER 1 WIN' : 'PLAYER 2 WIN';
+    return player2Pick === 'R' ? 'PLAYER 1 WIN' : 'PLAYER 2 WIN';
   if (player1Pick === 'S')
-    return playaer2Pick === 'P' ? 'PLAYER 1 WIN' : 'PLAYER 2 WIN';
+    return player2Pick === 'P' ? 'PLAYER 1 WIN' : 'PLAYER 2 WIN';
+};
+
+const getResult = (arr1, arr2, gameResult) => {
+  for (let i = 0; i < arr1.length || i < arr2.length; i++) {
+    const result = calcResult(arr1[i], arr2[i]);
+    gameResult.push(result);
+  }
+  return gameResult;
 };
 
 exports.register = async (req, res, next) => {
@@ -155,11 +140,10 @@ exports.playGame = async (req, res, next) => {
   const player = await activePlayer(req.body.userId, req.params.room_id);
 
   let matchInfo = matchRoom.matchInfo;
-
   let player1Choices = matchRoom.player1Choices;
   let player2Choices = matchRoom.player2Choices;
 
-  if (matchInfo.length > 3)
+  if (matchInfo.length === 3)
     res.status(200).json({
       status: 'success',
       message: 'Game Ended!',
@@ -175,38 +159,20 @@ exports.playGame = async (req, res, next) => {
         { where: { id: req.params.room_id }, returning: true }
       );
       const [_, room] = [...roomUpdate];
-      const enemyPick = room[0].player2Choices;
-      const yourPick = room[0].player1Choices;
-      const gameResult = room[0].matchInfo;
+
+      const result = getResult(
+        room[0].player1Choices,
+        room[0].player2Choices,
+        room[0].matchInfo
+      );
 
       res.status(200).json({
         status: 'success',
-        message: 'Wait for opponent player to pick',
-        yourPick,
-        enemyPick,
-        gameResult,
+        player1: room[0].player1Choices,
+        player2: room[0].player2Choices,
+        result,
+        room: roomUpdate,
       });
-
-      // for (let i = 0; i < matchInfo.length; i += 2) {
-      //   if (matchInfo[i] == '') {
-      //     matchInfo[i] = req.body.pick;
-      //     break;
-      //   }
-      // }
-      // } else if (player === 'Player 2') {
-      //   for (let i = 1; i < matchInfo.length; i += 2) {
-      //     if (matchInfo[i] == '') {
-      //       matchInfo[i] = req.body.pick;
-      //       break;
-      //     }
-      //   }
-      // }
-
-      // const match = await Room.update(
-      //   { matchInfo: matchInfo },
-      //   { where: { id: req.params.room_id }, returning: true }
-      // );
-      // res.status(200).json(match);
     } else if (player === 'Player 2') {
       if (!req.body.pick)
         throw new Error(`Please pick your choices between "R", "P", "S"`);
@@ -217,35 +183,20 @@ exports.playGame = async (req, res, next) => {
         { where: { id: req.params.room_id }, returning: true }
       );
       const [_, room] = [...roomUpdate];
-      const enemyPick = room[0].player1Choices;
-      const yourPick = room[0].player2Choices;
-      const gameResult = room[0].matchInfo;
+
+      const result = getResult(
+        room[0].player1Choices,
+        room[0].player2Choices,
+        room[0].matchInfo
+      );
+
       res.status(200).json({
         status: 'success',
-        enemyPick,
-        yourPick,
-        gameResult,
+        player1: room[0].player1Choices,
+        player2: room[0].player2Choices,
+        result,
+        room: roomUpdate,
       });
     }
   }
-};
-
-exports.gameResult = async (req, res, next) => {
-  matchRoom = await Room.findOne({ where: { id: req.params.room_id } });
-  matchInfo = matchRoom.matchInfo;
-  let winner = '';
-  switch (req.body.round) {
-    case 1:
-      winner = getWinner(matchInfo.slice(0, 2));
-      break;
-    case 2:
-      winner = getWinner(matchInfo.slice(2, 4));
-      break;
-    case 3:
-      winner = getWinner(matchInfo.slice(4, 6));
-      break;
-  }
-
-  if (winner != '') res.json({ message: winner });
-  else res.json({ message: 'error' });
 };

@@ -12,7 +12,7 @@ router.get('/whoami', restrict, authController.whoami);
 router.post('/create-room', restrict, authController.createRoom);
 router.post('/join', restrict, authController.playerJoin);
 router.put('/fight/:room_id', restrict, authController.playGame);
-router.post('/result/:room_id', restrict, authController.gameResult);
+// router.post('/result/:room_id', restrict, authController.gameResult);
 
 router.route('/').get(userController.getAllUsers);
 
