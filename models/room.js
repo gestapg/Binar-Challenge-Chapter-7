@@ -47,7 +47,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       matchInfo: {
         type: DataTypes.ARRAY(DataTypes.STRING),
-        defaultValue: [],
       },
       winnerId: {
         type: DataTypes.UUID,

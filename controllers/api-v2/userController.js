@@ -9,7 +9,3 @@ exports.getAllUsers = async (req, res, next) => {
     users: allUser,
   });
 };
-
-exports.getUser = (req, res, next) => {
-  res.status(200).send('HELLO WORLD');
-};

@@ -59,12 +59,6 @@ exports.getUserLogin = (req, res, next) => {
 
 exports.userValidationLogin = body('username').custom(
   async (value, { req }) => {
-    if (value === 'admin') {
-      const admin = await User.findOne({ where: { username: value } });
-      if (admin && admin.password === req.body.password) {
-        return true;
-      } else return false;
-    }
     const user = await User.findOne({ where: { username: value } });
     const result = bcrypt.compareSync(req.body.password, user.password);
     if (!user) {

@@ -29,7 +29,6 @@ module.exports = {
       },
       matchInfo: {
         type: Sequelize.ARRAY(Sequelize.STRING),
-        defaultValue: ['', '', '', '', '', ''],
       },
       winnerId: {
         type: Sequelize.UUID,
